@@ -1,30 +1,23 @@
 package com.example.mathgame;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
-import android.text.style.ImageSpan;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import java.util.Locale;
 import java.util.Random;
 
 public class GameMathGame extends AppCompatActivity {
+
+    private static final int SETTINGS_REQUEST = 1;
 
     private TextView timerTextView;
     private TextView problemTextView;
@@ -34,10 +27,10 @@ public class GameMathGame extends AppCompatActivity {
     private Button buttonAnswer3;
 
     private int numCorrectAnswers = 0;
-    private int timeRemaining = 60;
+    private int timeRemaining;
+    private int bounds;
     private CountDownTimer timer;
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,14 +43,10 @@ public class GameMathGame extends AppCompatActivity {
         buttonAnswer2 = findViewById(R.id.buttonAnswer2);
         buttonAnswer3 = findViewById(R.id.buttonAnswer3);
 
+        findViewById(R.id.closeButton).setOnClickListener(v -> finish());
 
-        // Add a click listener to the closeTextView
-        TextView closeTextView = findViewById(R.id.closeButton);
-        closeTextView.setOnClickListener(v -> finish());
-
-        generateNewProblem();
-
-        timer = new CountDownTimer(timeRemaining * 200L, 1000) {
+        // Initialize the timer here
+        timer = new CountDownTimer(60000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 timeRemaining = (int) (millisUntilFinished / 1000);
@@ -68,13 +57,29 @@ public class GameMathGame extends AppCompatActivity {
             public void onFinish() {
                 endGame();
             }
-        }.start();
+        };
+
+        Intent settingsIntent = new Intent(this, GameSettingsActivity.class);
+        startActivityForResult(settingsIntent, SETTINGS_REQUEST);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == SETTINGS_REQUEST && resultCode == RESULT_OK) {
+            timeRemaining = data.getIntExtra("timer", 60);
+            bounds = data.getIntExtra("bounds", 4);
+            generateNewProblem();
+            startTimer();
+        }
     }
 
     public void generateNewProblem() {
         Random rand = new Random();
-        int num1 = rand.nextInt(4) + 1;
-        int num2 = rand.nextInt(4) + 1;
+        int num1 = rand.nextInt(bounds) + 1;
+        int num2 = rand.nextInt(bounds) + 1;
         problemTextView.setText(num1 + " + " + num2);
         generateRandomAnswers(num1, num2);
     }
@@ -118,16 +123,8 @@ public class GameMathGame extends AppCompatActivity {
 
     public void onAnswerButtonClick(View view) {
         Button button = (Button) view;
-        String buttonText = button.getText().toString();
-        try {
-            int userAnswer = Integer.parseInt(buttonText);
-            checkAnswer(userAnswer);
-            //log user answer
-            Log.d("useranswer", "User answer: " + userAnswer);
-        } catch (NumberFormatException e) {
-            // Log the error or show an error message to the user
-            Log.e("useranswer", "Invalid number format: " + buttonText, e);
-        }
+        int userAnswer = Integer.parseInt(button.getText().toString());
+        checkAnswer(userAnswer);
     }
 
     private void checkAnswer(int userAnswer) {
@@ -137,73 +134,47 @@ public class GameMathGame extends AppCompatActivity {
 
         if (userAnswer == correctAnswer) {
             numCorrectAnswers++;
-            timeRemaining += 1;
+            timeRemaining += 2;
             updateTimerText(timeRemaining);
             updateScoreText();
             generateNewProblem();
-
-            // flash green
             problemTextView.setBackgroundColor(Color.GREEN);
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    problemTextView.setBackgroundColor(Color.TRANSPARENT);
-                }
-            }, 200);
-            // Cancel the current timer and start a new one
-            timer.cancel();
-            timer = new CountDownTimer(timeRemaining * 1000L, 1000) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    timeRemaining = (int) (millisUntilFinished / 1000);
-                    updateTimerText(timeRemaining);
-                }
-
-                @Override
-                public void onFinish() {
-                    endGame();
-                }
-            }.start();
+            new Handler().postDelayed(() -> problemTextView.setBackgroundColor(Color.TRANSPARENT), 200);
+            restartTimer();
         } else {
-            // flash red
             problemTextView.setBackgroundColor(Color.RED);
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    problemTextView.setBackgroundColor(Color.TRANSPARENT);
-                }
-            }, 200);
+            new Handler().postDelayed(() -> problemTextView.setBackgroundColor(Color.TRANSPARENT), 200);
         }
+    }
 
+    private void startTimer() {
+        timer = new CountDownTimer(timeRemaining * 1000L, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeRemaining = (int) (millisUntilFinished / 1000);
+                updateTimerText(timeRemaining);
+            }
+
+            @Override
+            public void onFinish() {
+                endGame();
+            }
+        }.start();
+    }
+
+    private void restartTimer() {
+        timer.cancel();
+        startTimer();
     }
 
     private void updateTimerText(int timeRemaining) {
         int minutes = timeRemaining / 60;
         int seconds = timeRemaining % 60;
-        String timeText = String.format(Locale.getDefault(), "%d:%02d", minutes, seconds);
-        timerTextView.setText(timeText);
+        timerTextView.setText(String.format(Locale.getDefault(), "%d:%02d", minutes, seconds));
     }
 
     private void updateScoreText() {
-        // Create a SpannableStringBuilder
-        SpannableStringBuilder ssb = new SpannableStringBuilder("Score: ");
-
-        // Get the drawable
-        Drawable drawable = ContextCompat.getDrawable(this, R.drawable.score_counter);
-
-        // Set the size of the drawable to match the text size
-        int textSize = (int) scoreTextView.getTextSize();
-        assert drawable != null;
-        drawable.setBounds(0, 0, textSize, textSize);
-
-        // Add an ImageSpan for each correct answer
-        for (int i = 0; i < numCorrectAnswers; i++) {
-            ssb.append(" ");
-            ssb.setSpan(new ImageSpan(drawable), ssb.length() - 1, ssb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        }
-
-        // Set the text of the TextView
-        scoreTextView.setText(ssb, TextView.BufferType.SPANNABLE);
+        scoreTextView.setText("Score: " + numCorrectAnswers);
     }
 
     private void endGame() {
@@ -231,11 +202,10 @@ public class GameMathGame extends AppCompatActivity {
         updateScoreText();
     }
 
-    public void displayScores(View view) {
-        view.setVisibility(View.GONE);
-        TextView scoresListTextView = findViewById(R.id.scoresListTextView);
-        scoresListTextView.setText("Your score: " + numCorrectAnswers);
-        scoresListTextView.setVisibility(View.VISIBLE);
+    private void displayScores(View view) {
+        EditText editText = (EditText) view;
+        editText.setText("Scores:\n");
+        editText.append("1. " + numCorrectAnswers + "\n");
     }
 
 }

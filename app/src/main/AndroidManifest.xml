@@ -23,6 +23,7 @@
         </activity>
         <activity android:name=".GameMathGame" />
         <activity android:name=".GameMatchGame" />
+        <activity android:name=".GameSettingsActivity" />
 
 
     </application>
