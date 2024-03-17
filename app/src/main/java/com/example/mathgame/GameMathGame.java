@@ -61,7 +61,7 @@ public class GameMathGame extends AppCompatActivity {
             @Override
             public void onTick(long millisUntilFinished) {
                 timeRemaining = (int) (millisUntilFinished / 1000);
-                updateTimerText();
+                updateTimerText(timeRemaining);
             }
 
             @Override
@@ -137,8 +137,8 @@ public class GameMathGame extends AppCompatActivity {
 
         if (userAnswer == correctAnswer) {
             numCorrectAnswers++;
-            timeRemaining += 10;
-            updateTimerText();
+            timeRemaining += 1;
+            updateTimerText(timeRemaining);
             updateScoreText();
             generateNewProblem();
 
@@ -150,6 +150,20 @@ public class GameMathGame extends AppCompatActivity {
                     problemTextView.setBackgroundColor(Color.TRANSPARENT);
                 }
             }, 200);
+            // Cancel the current timer and start a new one
+            timer.cancel();
+            timer = new CountDownTimer(timeRemaining * 1000L, 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    timeRemaining = (int) (millisUntilFinished / 1000);
+                    updateTimerText(timeRemaining);
+                }
+
+                @Override
+                public void onFinish() {
+                    endGame();
+                }
+            }.start();
         } else {
             // flash red
             problemTextView.setBackgroundColor(Color.RED);
@@ -163,7 +177,7 @@ public class GameMathGame extends AppCompatActivity {
 
     }
 
-    private void updateTimerText() {
+    private void updateTimerText(int timeRemaining) {
         int minutes = timeRemaining / 60;
         int seconds = timeRemaining % 60;
         String timeText = String.format(Locale.getDefault(), "%d:%02d", minutes, seconds);
@@ -179,6 +193,7 @@ public class GameMathGame extends AppCompatActivity {
 
         // Set the size of the drawable to match the text size
         int textSize = (int) scoreTextView.getTextSize();
+        assert drawable != null;
         drawable.setBounds(0, 0, textSize, textSize);
 
         // Add an ImageSpan for each correct answer
