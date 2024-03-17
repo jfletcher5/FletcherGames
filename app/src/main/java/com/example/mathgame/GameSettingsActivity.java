@@ -33,6 +33,13 @@ public class GameSettingsActivity extends AppCompatActivity {
             finish();
         });
 
+        // add onclicklistener to go to to gamepickeractivity when close button is clicked
+        findViewById(R.id.closeButton).setOnClickListener(v -> {
+            //navigate to GamePickerActivity
+            Intent intent = new Intent(this, GamePickerActivity.class);
+            startActivity(intent);
+        });
+
         for (int i = 0; i < timerButtons.length; i++) {
             int finalI = i;
             timerButtons[i].setOnClickListener(v -> {
@@ -46,7 +53,6 @@ public class GameSettingsActivity extends AppCompatActivity {
             });
         }
     }
-
     private void resetButtons() {
         for (Button timerButton : timerButtons) {
             timerButton.setEnabled(true);
