@@ -22,8 +22,8 @@ public class GameMatchGame extends AppCompatActivity {
     private Button startButton;
     private Button closeButton;
     private TextView timerTextView;
-    private ImageButton[] cards = new ImageButton[8];
-    private int[] cardValues = new int[8];
+    private final ImageButton[] cards = new ImageButton[8];
+    private final int[] cardValues = new int[8];
     private final int[] cardOptions = {
             R.drawable.card_daddy,
             R.drawable.card_mommy,

@@ -1,8 +1,8 @@
 package com.example.mathgame;
 
 public class Game {
-    private String name;
-    private int imageResId;
+    private final String name;
+    private final int imageResId;
 
     public Game(String name, int imageResId) {
         this.name = name;

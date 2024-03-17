@@ -57,7 +57,7 @@ public class GameMathGame extends AppCompatActivity {
 
         generateNewProblem();
 
-        timer = new CountDownTimer(timeRemaining * 200, 1000) {
+        timer = new CountDownTimer(timeRemaining * 200L, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 timeRemaining = (int) (millisUntilFinished / 1000);

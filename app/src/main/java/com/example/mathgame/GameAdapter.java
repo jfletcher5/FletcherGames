@@ -16,8 +16,8 @@ import androidx.cardview.widget.CardView;
 import java.util.List;
 
 public class GameAdapter extends BaseAdapter {
-    private Context context;
-    private List<Game> games;
+    private final Context context;
+    private final List<Game> games;
 
     public GameAdapter(Context context, List<Game> games) {
         this.context = context;
