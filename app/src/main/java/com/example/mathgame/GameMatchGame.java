@@ -1,10 +1,13 @@
 package com.example.mathgame;
 
 import android.animation.ObjectAnimator;
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.view.View;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -20,7 +23,6 @@ import java.util.Locale;
 public class GameMatchGame extends AppCompatActivity {
 
     private Button startButton;
-    private Button closeButton;
     private TextView timerTextView;
     private final ImageButton[] cards = new ImageButton[8];
     private final int[] cardValues = new int[8];
@@ -44,7 +46,7 @@ public class GameMatchGame extends AppCompatActivity {
         setContentView(R.layout.activity_game_match_game);
 
         startButton = findViewById(R.id.startButton);
-        closeButton = findViewById(R.id.closeButton);
+        Button closeButton = findViewById(R.id.closeButton);
         timerTextView = findViewById(R.id.timerTextView);
         for (int i = 0; i < 8; i++) {
             String buttonID = "card" + (i + 1);
@@ -52,32 +54,19 @@ public class GameMatchGame extends AppCompatActivity {
             cards[i] = findViewById(resID);
             cards[i].setTag(i); // Set the tag to the index of the card
             cards[i].setEnabled(false); // Deactivate the cards
-            cards[i].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    flipCard((ImageButton) v);
-                }
-            });
+            cards[i].setOnClickListener(v -> flipCard((ImageButton) v));
         }
 
-        startButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startButton.setEnabled(false);
-                assignCardValues();
-                for (ImageButton card : cards) {
-                    card.setEnabled(true); // Activate the cards
-                }
-                startTimer();
+        startButton.setOnClickListener(v -> {
+            startButton.setEnabled(false);
+            assignCardValues();
+            for (ImageButton card : cards) {
+                card.setEnabled(true); // Activate the cards
             }
+            startTimer();
         });
 
-        closeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        closeButton.setOnClickListener(v -> finish());
     }
 
     private void assignCardValues() {
@@ -112,6 +101,22 @@ public class GameMatchGame extends AppCompatActivity {
     }
 
     private void flipCard(ImageButton card) {
+        // Get the Vibrator service
+        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+        // Check if the device has a vibrator
+        if (vibrator != null && vibrator.hasVibrator()) {
+            // Create a One-shot vibration
+            // Vibration for 500 milliseconds with full amplitude (-1 means default amplitude)
+            VibrationEffect effect = null;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                effect = VibrationEffect.createOneShot(100, 10);
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vibrator.vibrate(effect);
+            }
+        }
+
         if (flippedCard == null) {
             flippedCard = card;
             showCard(flippedCard);
@@ -121,7 +126,6 @@ public class GameMatchGame extends AppCompatActivity {
             checkForMatch();
         }
     }
-
     private void showCard(ImageButton card) {
         int cardIndex = Integer.parseInt(card.getTag().toString());
         card.setImageResource(cardValues[cardIndex]); // Set the image resource to the card's assigned value
