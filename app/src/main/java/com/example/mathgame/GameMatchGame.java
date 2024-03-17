@@ -8,6 +8,7 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -58,15 +59,25 @@ public class GameMatchGame extends AppCompatActivity {
         }
 
         startButton.setOnClickListener(v -> {
-            startButton.setEnabled(false);
             assignCardValues();
-            for (ImageButton card : cards) {
-                card.setEnabled(true); // Activate the cards
-            }
+            animateCards();
+            startButton.setEnabled(false);
             startTimer();
         });
 
         closeButton.setOnClickListener(v -> finish());
+    }
+
+    private void animateCards() {
+        int[] cardIds = {R.id.card1, R.id.card2, R.id.card3, R.id.card4, R.id.card5, R.id.card6, R.id.card7, R.id.card8};
+        for (int cardId : cardIds) {
+            ImageButton card = findViewById(cardId);
+            card.setVisibility(View.VISIBLE);
+            card.setTranslationX(-1000f);
+            card.setTranslationY(-1000f);
+            card.animate().translationXBy(1000f).translationYBy(1000f).rotation(360).setDuration(400);
+            card.setEnabled(true);
+        }
     }
 
     private void assignCardValues() {

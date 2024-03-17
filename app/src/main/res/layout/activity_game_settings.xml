@@ -5,6 +5,14 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <TextView
+        android:id="@+id/timerTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/timer"
+        android:textAlignment="center"
+        android:textSize="24sp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,17 +42,10 @@
     </LinearLayout>
 
     <EditText
-        android:id="@+id/timerInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/enter_timer_duration"
-        android:inputType="number" />
-
-    <EditText
         android:id="@+id/boundsInput"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/enter_bounds_for_random_number_generation"
+        android:layout_height="40dp"
+        android:hint="@string/bounds"
         android:inputType="number" />
 
     <Button

@@ -15,9 +15,10 @@
     <string name="start">Start</string>
     <string name="close">Close</string>
     <string name="enter_timer_duration">Enter timer duration</string>
-    <string name="enter_bounds_for_random_number_generation">Enter bounds for random number generation</string>
+    <string name="bounds">Enter the max size of each number</string>
     <string name="start_playing">Start Playing!</string>
     <string name="hard">Hard</string>
     <string name="medium">Medium</string>
     <string name="easy">Easy</string>
+    <string name="timer">Timer:</string>
 </resources>

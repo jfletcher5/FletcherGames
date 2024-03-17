@@ -53,6 +53,7 @@
             android:layout_margin="8dp"
             android:src="@drawable/card_back"
             android:scaleType="fitXY"
+            android:visibility="invisible"
             android:onClick="flipCard"/>
 
         <ImageButton
@@ -64,7 +65,7 @@
             android:layout_margin="8dp"
             android:src="@drawable/card_back"
             android:scaleType="fitXY"
-
+            android:visibility="invisible"
             android:onClick="flipCard"/>
 
         <ImageButton
@@ -76,7 +77,7 @@
             android:layout_margin="8dp"
             android:src="@drawable/card_back"
             android:scaleType="fitXY"
-
+            android:visibility="invisible"
             android:onClick="flipCard"/>
 
         <ImageButton
@@ -88,7 +89,7 @@
             android:layout_margin="8dp"
             android:src="@drawable/card_back"
             android:scaleType="fitXY"
-
+            android:visibility="invisible"
             android:onClick="flipCard"/>
 
         <ImageButton
@@ -100,7 +101,7 @@
             android:layout_margin="8dp"
             android:src="@drawable/card_back"
             android:scaleType="fitXY"
-
+            android:visibility="invisible"
             android:onClick="flipCard"/>
 
         <ImageButton
@@ -112,7 +113,7 @@
             android:layout_margin="8dp"
             android:src="@drawable/card_back"
             android:scaleType="fitXY"
-
+            android:visibility="invisible"
             android:onClick="flipCard"/>
 
         <ImageButton
@@ -124,7 +125,7 @@
             android:layout_margin="8dp"
             android:src="@drawable/card_back"
             android:scaleType="fitXY"
-
+            android:visibility="invisible"
             android:onClick="flipCard"/>
 
         <ImageButton
@@ -136,7 +137,7 @@
             android:layout_margin="8dp"
             android:src="@drawable/card_back"
             android:scaleType="fitXY"
-
+            android:visibility="invisible"
             android:onClick="flipCard"/>
 
     </GridLayout>
