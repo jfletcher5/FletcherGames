@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Fletcher Kids\' Games</string>
+    <string name="answer_3">Answer 3</string>
+    <string name="answer_2">Answer 2</string>
+    <string name="answer_1">Answer 1</string>
+    <string name="_5_3">5 + 3</string>
+    <string name="enter_your_answer">Enter your answer</string>
+    <string name="submit_answer">Submit Answer</string>
+    <string name="_1_00">1:00</string>
+    <string name="scores">Scores</string>
+    <string name="pick_your_game">Pick your game</string>
+    <string name="math_game">Math Game</string>
+    <string name="x">Close</string>
+    <string name="score_0">Score: 0</string>
+    <string name="start">Start</string>
+    <string name="close">Close</string>
+</resources>
