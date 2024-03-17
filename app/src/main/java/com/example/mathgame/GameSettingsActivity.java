@@ -3,7 +3,6 @@ package com.example.mathgame;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.graphics.Color;
@@ -33,9 +32,7 @@ public class GameSettingsActivity extends AppCompatActivity {
             finish();
         });
 
-        // add onclicklistener to go to to gamepickeractivity when close button is clicked
         findViewById(R.id.closeButton).setOnClickListener(v -> {
-            //navigate to GamePickerActivity
             Intent intent = new Intent(this, GamePickerActivity.class);
             startActivity(intent);
         });
@@ -46,7 +43,6 @@ public class GameSettingsActivity extends AppCompatActivity {
                 resetButtons();
                 timerButtons[finalI].setEnabled(false);
                 timerButtons[finalI].setBackgroundColor(Color.GRAY);
-                // set timetextview to the "Timer: " and the value of the button
                 timerValue = timerValues[finalI];
                 timerTextView = findViewById(R.id.timerTextView);
                 timerTextView.setText("Timer: " + timerValue);
