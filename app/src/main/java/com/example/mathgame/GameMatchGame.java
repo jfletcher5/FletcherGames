@@ -201,4 +201,7 @@ public class GameMatchGame extends AppCompatActivity {
         matchedPairs = 0;
         startButton.setEnabled(true);
     }
+
+    public void flipCard(View view) {
+    }
 }

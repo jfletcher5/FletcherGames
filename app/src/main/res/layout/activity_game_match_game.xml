@@ -54,7 +54,7 @@
             android:src="@drawable/card_back"
             android:scaleType="fitXY"
             android:visibility="invisible"
-            android:onClick="flipCard"/>
+            android:onClick="flipCard" />
 
         <ImageButton
             android:id="@+id/card2"
@@ -138,7 +138,8 @@
             android:src="@drawable/card_back"
             android:scaleType="fitXY"
             android:visibility="invisible"
-            android:onClick="flipCard"/>
+            android:onClick="flipCard"
+            android:contentDescription="@string/todo" />
 
     </GridLayout>
 

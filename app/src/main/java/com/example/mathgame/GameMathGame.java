@@ -80,7 +80,8 @@ public class GameMathGame extends AppCompatActivity {
         Random rand = new Random();
         int num1 = rand.nextInt(bounds) + 1;
         int num2 = rand.nextInt(bounds) + 1;
-        problemTextView.setText(num1 + " + " + num2);
+        String s = num1 + " + " + num2;
+        problemTextView.setText(s);
         generateRandomAnswers(num1, num2);
     }
 
@@ -174,7 +175,8 @@ public class GameMathGame extends AppCompatActivity {
     }
 
     private void updateScoreText() {
-        scoreTextView.setText("Score: " + numCorrectAnswers);
+        scoreTextView.setText("Score:\n");
+        scoreTextView.append("1. " + numCorrectAnswers + "\n");
     }
 
     private void endGame() {
@@ -184,14 +186,11 @@ public class GameMathGame extends AppCompatActivity {
             new AlertDialog.Builder(this)
                     .setTitle("Game Over")
                     .setMessage("You got " + numCorrectAnswers + " correct answers!")
-                    .setPositiveButton("Start Over", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            numCorrectAnswers = 0;
-                            timeRemaining = 60;
-                            generateNewProblem();
-                            timer.start();
-                        }
+                    .setPositiveButton("Start Over", (dialogInterface, i) -> {
+                        numCorrectAnswers = 0;
+                        timeRemaining = 60;
+                        generateNewProblem();
+                        timer.start();
                     })
                     .setCancelable(false)
                     .show();

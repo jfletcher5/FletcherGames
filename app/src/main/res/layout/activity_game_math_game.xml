@@ -5,8 +5,6 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-
-
     <TextView
         android:id="@+id/timerTextView"
         android:layout_width="match_parent"
@@ -38,7 +36,8 @@
             android:layout_weight="1"
             android:text="@string/answer_1"
             android:textSize="24sp"
-            android:onClick="onAnswerButtonClick"/>
+            android:onClick="onAnswerButtonClick"
+            style="?android:attr/buttonBarButtonStyle" />
 
         <Button
             android:id="@+id/buttonAnswer2"
@@ -48,7 +47,8 @@
             android:layout_weight="1"
             android:text="@string/answer_2"
             android:textSize="24sp"
-            android:onClick="onAnswerButtonClick"/>
+            android:onClick="onAnswerButtonClick"
+            style="?android:attr/buttonBarButtonStyle" />
 
         <Button
             android:id="@+id/buttonAnswer3"
@@ -57,7 +57,8 @@
             android:layout_weight="1"
             android:text="@string/answer_3"
             android:textSize="24sp"
-            android:onClick="onAnswerButtonClick"/>
+            android:onClick="onAnswerButtonClick"
+            style="?android:attr/buttonBarButtonStyle" />
     </LinearLayout>
 
     <LinearLayout
@@ -109,8 +110,7 @@
                 android:layout_weight="0"
                 android:theme="@style/SecondaryButton"
                 android:text="@string/x"
-                android:textSize="14sp"
-                android:onClick="onCloseButtonClick"/>
+                android:textSize="14sp"/>
         </LinearLayout>
 
     </RelativeLayout>

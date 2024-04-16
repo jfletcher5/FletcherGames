@@ -22,4 +22,5 @@
     <string name="easy">Easy</string>
     <string name="timer">Timer:</string>
     <string name="closeGame">Close Game</string>
+    <string name="todo">TODO</string>
 </resources>
