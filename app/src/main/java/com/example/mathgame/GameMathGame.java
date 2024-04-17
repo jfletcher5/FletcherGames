@@ -2,7 +2,6 @@ package com.example.mathgame;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import java.util.Locale;
 import java.util.Random;
@@ -202,7 +200,7 @@ public class GameMathGame extends AppCompatActivity {
     }
 
     private void displayScores(View view) {
-        EditText editText = (EditText) view;
+        TextView editText = (TextView) view;
         editText.setText("Scores:\n");
         editText.append("1. " + numCorrectAnswers + "\n");
     }
